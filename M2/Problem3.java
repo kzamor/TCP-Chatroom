@@ -23,9 +23,9 @@ public class Problem3 {
         // convert each value to positive
         //set the result to the proper index of the output array
         //hint: don't forget to handle the data types properly
-        for (int i=0; i< arr.length; i++){
-            Math.abs(arr[i]);
-        }
+       // for (int i=0; i< arr.length; i++){
+       //     Math.abs(arr[i]);
+        //}
         
         //end edit section
 
