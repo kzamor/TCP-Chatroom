@@ -146,7 +146,7 @@ public class Room implements AutoCloseable{
 		client.disconnect();
 		room.removeClient(client);
 	}
-	// end command helper methods
+	// end command helper methods.
 
 	/***
 	 * Takes a sender and a message and broadcasts the message to all clients in
