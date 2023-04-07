@@ -3,8 +3,10 @@ package Module5.Part5;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+//import java.util.Random;
+import java.util.Random;
 
-public class Room implements AutoCloseable{
+public class Room implements AutoCloseable {
 	protected static Server server;// used to refer to accessible server functions
 	private String name;
 	private List<ServerThread> clients = new ArrayList<ServerThread>();
@@ -16,6 +18,8 @@ public class Room implements AutoCloseable{
 	private final static String DISCONNECT = "disconnect";
 	private final static String LOGOUT = "logout";
 	private final static String LOGOFF = "logoff";
+	private static final String ROLL = "roll";
+	private static final String FLIP = "flip";
 
 	public Room(String name) {
 		this.name = name;
@@ -50,7 +54,7 @@ public class Room implements AutoCloseable{
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					//sendMessage(client, "joined the room " + getName());
+					// sendMessage(client, "joined the room " + getName());
 					sendConnectionStatus(client, true);
 				}
 			}.start();
@@ -66,7 +70,7 @@ public class Room implements AutoCloseable{
 		// we don't need to broadcast it to the server
 		// only to our own Room
 		if (clients.size() > 0) {
-			//sendMessage(client, "left the room");
+			// sendMessage(client, "left the room");
 			sendConnectionStatus(client, false);
 		}
 		checkClients();
@@ -92,6 +96,7 @@ public class Room implements AutoCloseable{
 	 */
 	private boolean processCommands(String message, ServerThread client) {
 		boolean wasCommand = false;
+
 		try {
 			if (message.startsWith(COMMAND_TRIGGER)) {
 				String[] comm = message.split(COMMAND_TRIGGER);
@@ -99,6 +104,8 @@ public class Room implements AutoCloseable{
 				String[] comm2 = part1.split(" ");
 				String command = comm2[0];
 				String roomName;
+				// String text;
+
 				wasCommand = true;
 				switch (command) {
 					case CREATE_ROOM:
@@ -108,6 +115,36 @@ public class Room implements AutoCloseable{
 					case JOIN_ROOM:
 						roomName = comm2[1];
 						Room.joinRoom(roomName, client);
+						break;
+					// kpz2 4/5/2023
+					case ROLL:
+						String text = comm2[1];
+						if (text.contains("d")) {
+							int numOfDice = text.charAt(0);
+							int max = text.charAt(2);
+							int randomNum = (int) (Math.random() * (1 - max)) + 1;
+							message = "The result of the roll is: " + numOfDice + "d" + randomNum;
+							sendMessage(client, message);
+						} else {
+							int num = Integer.parseInt(text);
+							int randomNum = (int) (Math.random() * (1 - num)) + 1;
+							message = "The result of the roll is: " + randomNum;
+							sendMessage(client, message);
+						}
+						break;
+					case FLIP:
+
+						Random random = new Random();
+						int result = random.nextInt(2);
+
+						if (result == 0) {
+							message = "The result of the coin flip is heads.";
+						} else {
+							message = "The result of the coin flip is tails.";
+						}
+
+						sendMessage(client, message);
+						wasCommand = true;
 						break;
 					case DISCONNECT:
 					case LOGOUT:
@@ -126,6 +163,10 @@ public class Room implements AutoCloseable{
 		return wasCommand;
 	}
 
+	// protected static void processMessages(message) {
+	// do something with the messages
+	// then broadcast to all clients
+	// }
 	// Command helper methods
 	protected static void createRoom(String roomName, ServerThread client) {
 		if (server.createNewRoom(roomName)) {
@@ -160,12 +201,40 @@ public class Room implements AutoCloseable{
 		if (!isRunning) {
 			return;
 		}
+
 		info("Sending message to " + clients.size() + " clients");
 		if (sender != null && processCommands(message, sender)) {
 			// it was a command, don't broadcast
 			return;
 		}
-		
+
+		if (message.contains("*b")) {
+			message = message.replace("*b", "<b>");
+			message = message.replace("b*", "</b>");
+		}
+		if (message.contains("*")) {
+			message = message.replace("*i", "<i>");
+			message = message.replace("i*", "</i>");
+		}
+		if (message.contains("_")) {
+			message = message.replace("*u", "<u>");
+			message = message.replace("u*", "</u>");
+		}
+		if (message.contains("#r")) {
+			message = message.replace("#r", "<font>");
+			message = message.replace("r#", "</font>");
+		}
+		if (message.contains("#b")) {
+			message = message.replace("#b", "<font>");
+			message = message.replace("b#", "</font>");
+		}
+		if (message.contains("#g")) {
+			message = message.replace("#g", "<font>");
+			message = message.replace("g#", "</font>");
+		}
+
+		sendMessage(sender, message);
+
 		String from = (sender == null ? "Room" : sender.getClientName());
 		Iterator<ServerThread> iter = clients.iterator();
 		while (iter.hasNext()) {
@@ -176,7 +245,8 @@ public class Room implements AutoCloseable{
 			}
 		}
 	}
-	protected synchronized void sendConnectionStatus(ServerThread sender, boolean isConnected){
+
+	protected synchronized void sendConnectionStatus(ServerThread sender, boolean isConnected) {
 		Iterator<ServerThread> iter = clients.iterator();
 		while (iter.hasNext()) {
 			ServerThread client = iter.next();
@@ -186,16 +256,18 @@ public class Room implements AutoCloseable{
 			}
 		}
 	}
-	private void handleDisconnect(Iterator<ServerThread> iter, ServerThread client){
+
+	private void handleDisconnect(Iterator<ServerThread> iter, ServerThread client) {
 		iter.remove();
-		info("Removed client " + client.getClientName());
+		info("Removed client " + client.getId());
 		checkClients();
-		sendMessage(null, client.getClientName() + " disconnected");
+		sendMessage(null, client.getId() + " disconnected");
 	}
+
 	public void close() {
 		server.removeRoom(this);
-		//NOTE: This will break all rooms
-		//be sure to remove/comment out server = null;
+		// NOTE: This will break all rooms
+		// be sure to remove/comment out server = null;
 		server = null;
 		isRunning = false;
 		clients = null;
