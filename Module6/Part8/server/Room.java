@@ -239,6 +239,7 @@ public class Room implements AutoCloseable {
 		sendConnectionStatus(client, false);
 		// sendMessage(null, client.getClientName() + " disconnected");
 	}
+	
 
 	public void close() {
 		Server.INSTANCE.removeRoom(this);
