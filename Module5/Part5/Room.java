@@ -207,7 +207,7 @@ public class Room implements AutoCloseable {
 			// it was a command, don't broadcast
 			return;
 		}
-
+		//kpz2 4/7/2023
 		if (message.contains("*b")) {
 			message = message.replace("*b", "<b>");
 			message = message.replace("b*", "</b>");
@@ -216,7 +216,7 @@ public class Room implements AutoCloseable {
 			message = message.replace("*i", "<i>");
 			message = message.replace("i*", "</i>");
 		}
-		if (message.contains("_")) {
+		if (message.contains("*u")) {
 			message = message.replace("*u", "<u>");
 			message = message.replace("u*", "</u>");
 		}
@@ -232,8 +232,6 @@ public class Room implements AutoCloseable {
 			message = message.replace("#g", "<font>");
 			message = message.replace("g#", "</font>");
 		}
-
-		sendMessage(sender, message);
 
 		String from = (sender == null ? "Room" : sender.getClientName());
 		Iterator<ServerThread> iter = clients.iterator();
