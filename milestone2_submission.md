@@ -1,6 +1,6 @@
 <table><tr><td> <em>Assignment: </em> IT114 Chatroom Milestone 2</td></tr>
 <tr><td> <em>Student: </em> Kelvin Zamor (kpz2)</td></tr>
-<tr><td> <em>Generated: </em> 4/7/2023 5:43:26 PM</td></tr>
+<tr><td> <em>Generated: </em> 4/11/2023 7:37:42 PM</td></tr>
 <tr><td> <em>Grading Link: </em> <a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IT114-008-S23/it114-chatroom-milestone-2/grade/kpz2" target="_blank">Grading</a></td></tr></table>
 <table><tr><td> <em>Instructions: </em> <p>Implement the features from Milestone2 from the proposal document:&nbsp; <a href="https://docs.google.com/document/d/1ONmvEvel97GTFPGfVwwQC96xSsobbSbk56145XizQG4/view">https://docs.google.com/document/d/1ONmvEvel97GTFPGfVwwQC96xSsobbSbk56145XizQG4/view</a></p>
 </td></tr></table>
@@ -16,12 +16,12 @@
 </table></td></tr>
 <table><tr><td> <em>Deliverable 2: </em> Server-side commands </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Show the code for the mentioned commands</td></tr>
-<tr><td><table><tr><td><img width="768px" src="https://user-images.githubusercontent.com/127684882/230676337-fcc1e0cb-e4c3-4c78-9430-7b327081912e.png"/></td></tr>
+<tr><td><table><tr><td><img width="768px" src="https://user-images.githubusercontent.com/127684882/231310037-d9819cd8-7cbe-4a4c-9f2a-19b425f70128.png"/></td></tr>
 <tr><td> <em>Caption:</em> <p>code for /roll and /flip<br></p>
 </td></tr>
 </table></td></tr>
 <tr><td> <em>Sub-Task 2: </em> Explain the logic/implementation of each commands</td></tr>
-<tr><td> <em>Response:</em> <p>/roll works because if the message the user enters contains a &quot;d&quot;, for<br>example, &quot;2d6&quot;, it takes the first number and sets it to numOfDice and<br>it takes the second number and sets it to max. If the message<br>doesn&#39;t contain a &quot;d&quot;, the code then picks a random number from 1<br>to whatever number the user entered. /flip works by choosing a random number<br>between 1 and 0. If the number is 0 then message = heads<br>and if the number is 1, then message = tails.<br></p><br></td></tr>
+<tr><td> <em>Response:</em> <p>/roll works because if the message the user enters contains a &quot;d&quot;, for<br>example, &quot;2d6&quot;, it takes the first number and sets it to numDice and<br>it takes the second number and sets it to maxNum.It then subtracts the<br>min from the max for the upper limit, then adds the min to<br>the result. If the message doesn&#39;t contain a &quot;d&quot;, the code then picks<br>a random number from 1 to whatever number the user entered. /flip works<br>by choosing a random number between 1 and 0. If the number is<br>0 then message = heads and if the number is 1, then message<br>= tails.<br></p><br></td></tr>
 </table></td></tr>
 <table><tr><td> <em>Deliverable 3: </em> Text Display </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Show the code for the various style handling via markdown or special characters</td></tr>
