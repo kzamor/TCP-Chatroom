@@ -1,6 +1,6 @@
 <table><tr><td> <em>Assignment: </em> IT114 Chatroom Milestone 2</td></tr>
 <tr><td> <em>Student: </em> Kelvin Zamor (kpz2)</td></tr>
-<tr><td> <em>Generated: </em> 4/11/2023 7:37:42 PM</td></tr>
+<tr><td> <em>Generated: </em> 4/21/2023 10:01:07 PM</td></tr>
 <tr><td> <em>Grading Link: </em> <a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IT114-008-S23/it114-chatroom-milestone-2/grade/kpz2" target="_blank">Grading</a></td></tr></table>
 <table><tr><td> <em>Instructions: </em> <p>Implement the features from Milestone2 from the proposal document:&nbsp; <a href="https://docs.google.com/document/d/1ONmvEvel97GTFPGfVwwQC96xSsobbSbk56145XizQG4/view">https://docs.google.com/document/d/1ONmvEvel97GTFPGfVwwQC96xSsobbSbk56145XizQG4/view</a></p>
 </td></tr></table>
@@ -16,7 +16,7 @@
 </table></td></tr>
 <table><tr><td> <em>Deliverable 2: </em> Server-side commands </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Show the code for the mentioned commands</td></tr>
-<tr><td><table><tr><td><img width="768px" src="https://user-images.githubusercontent.com/127684882/231310037-d9819cd8-7cbe-4a4c-9f2a-19b425f70128.png"/></td></tr>
+<tr><td><table><tr><td><img width="768px" src="https://user-images.githubusercontent.com/127684882/233239134-3f2e39ba-10f1-4f98-a582-42c131b728a9.png"/></td></tr>
 <tr><td> <em>Caption:</em> <p>code for /roll and /flip<br></p>
 </td></tr>
 </table></td></tr>
@@ -25,17 +25,17 @@
 </table></td></tr>
 <table><tr><td> <em>Deliverable 3: </em> Text Display </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Show the code for the various style handling via markdown or special characters</td></tr>
-<tr><td><table><tr><td><img width="768px" src="https://user-images.githubusercontent.com/127684882/230680941-9e737a78-5492-4ee9-8a66-4a3aaec289c4.png"/></td></tr>
+<tr><td><table><tr><td><img width="768px" src="https://user-images.githubusercontent.com/127684882/233241776-056b2c96-c33e-44b9-af6f-756eb26e3313.png"/></td></tr>
 <tr><td> <em>Caption:</em> <p>showing how bold, italics, color, and underline are all processed<br></p>
 </td></tr>
 </table></td></tr>
 <tr><td> <em>Sub-Task 2: </em> Show source message and the result output in the terminal (note, you won't actually see the styles until Milestone3)</td></tr>
-<tr><td><table><tr><td><img width="768px" src="https://user-images.githubusercontent.com/127684882/230681236-7c09292d-9c23-4b8c-bebc-6bf125095f55.png"/></td></tr>
+<tr><td><table><tr><td><img width="768px" src="https://user-images.githubusercontent.com/127684882/233242154-be7180c2-3136-4251-ab05-ca7a4a06a041.png"/></td></tr>
 <tr><td> <em>Caption:</em> <p>showing how bold, italics, color, and underline are displayed in the terminal. including<br>a combination of all options<br></p>
 </td></tr>
 </table></td></tr>
 <tr><td> <em>Sub-Task 3: </em> Explain how you got each style applied</td></tr>
-<tr><td> <em>Response:</em> <p>The way I got each style applied is I used the replace method<br>to replace the user input with the correct HTML tag. For example, <em>b<br>and b</em> turn into &lt;b&gt; and &lt;/b&gt;. I did the same thing for<br>color making it so that #r and r# turn into &lt;font&gt; and &lt;/font&gt;.<br></p><br></td></tr>
+<tr><td> <em>Response:</em> <p>The way I got each style applied is I used the replace method<br>to replace the user input with the correct HTML tag. For example, <em>b<br>and b</em> turn into &lt;b&gt; and &lt;/b&gt;. I did the same thing for<br>color making it so that #r and r# turn into &lt;font color =<br>&#39;red&gt;&quot; and &lt;/font&gt;.<br><br></p><br></td></tr>
 </table></td></tr>
 <table><tr><td> <em>Deliverable 4: </em> Misc </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Include the pull request for Milestone2 to main</td></tr>
