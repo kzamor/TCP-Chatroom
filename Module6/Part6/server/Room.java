@@ -3,6 +3,7 @@ package Module6.Part6.server;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 public class Room implements AutoCloseable{
 	protected static Server server;// used to refer to accessible server functions
@@ -16,6 +17,9 @@ public class Room implements AutoCloseable{
 	private final static String DISCONNECT = "disconnect";
 	private final static String LOGOUT = "logout";
 	private final static String LOGOFF = "logoff";
+	private static final String ROLL = "roll";
+	private static final String FLIP = "flip";
+
 
 	public Room(String name) {
 		this.name = name;
@@ -92,6 +96,7 @@ public class Room implements AutoCloseable{
 	 */
 	private boolean processCommands(String message, ServerThread client) {
 		boolean wasCommand = false;
+
 		try {
 			if (message.startsWith(COMMAND_TRIGGER)) {
 				String[] comm = message.split(COMMAND_TRIGGER);
@@ -99,6 +104,8 @@ public class Room implements AutoCloseable{
 				String[] comm2 = part1.split(" ");
 				String command = comm2[0];
 				String roomName;
+				// String text;
+
 				wasCommand = true;
 				switch (command) {
 					case CREATE_ROOM:
@@ -108,6 +115,40 @@ public class Room implements AutoCloseable{
 					case JOIN_ROOM:
 						roomName = comm2[1];
 						Room.joinRoom(roomName, client);
+						break;
+					// kpz2 4/5/2023
+					case ROLL:
+						String text = comm2[1];
+						if (text.contains("d")) {				
+                            String[] arrOfStr = text.split("d", 2);
+							String numOfDice = arrOfStr[0];
+							String max = arrOfStr[1];
+							int maxNum = Integer.parseInt(max);
+							int numDice = Integer.parseInt(numOfDice);
+							double result = ((Math.random() * ((numDice*maxNum)-numDice)) + numDice);
+							int result1 = (int)result;
+							message = "The result of the roll is: " + result1;
+							sendMessage(client, message);
+						} else {
+							int num = Integer.parseInt(text);
+							int randomNum = (int) (Math.random() * (1 - num)) + 1;
+							message = "The result of the roll is: " + randomNum;
+							sendMessage(client, message);
+						}
+						break;
+					case FLIP:
+
+						Random random = new Random();
+						int result = random.nextInt(2);
+
+						if (result == 0) {
+							message = "The result of the coin flip is heads.";
+						} else {
+							message = "The result of the coin flip is tails.";
+						}
+
+						sendMessage(client, message);
+						wasCommand = true;
 						break;
 					case DISCONNECT:
 					case LOGOUT:
@@ -161,12 +202,38 @@ public class Room implements AutoCloseable{
 		if (!isRunning) {
 			return;
 		}
+
 		info("Sending message to " + clients.size() + " clients");
 		if (sender != null && processCommands(message, sender)) {
 			// it was a command, don't broadcast
 			return;
 		}
-		
+		//kpz2 4/7/2023
+		if (message.contains("*b")) {
+			message = message.replace("*b", "<b>");
+			message = message.replace("b*", "</b>");
+		}
+		if (message.contains("*")) {
+			message = message.replace("*i", "<i>");
+			message = message.replace("i*", "</i>");
+		}
+		if (message.contains("*u")) {
+			message = message.replace("*u", "<u>");
+			message = message.replace("u*", "</u>");
+		}
+		if (message.contains("#r")) {
+			message = message.replace("#r", "<font>");
+			message = message.replace("r#", "</font>");
+		}
+		if (message.contains("#b")) {
+			message = message.replace("#b", "<font>");
+			message = message.replace("b#", "</font>");
+		}
+		if (message.contains("#g")) {
+			message = message.replace("#g", "<font>");
+			message = message.replace("g#", "</font>");
+		}
+
 		String from = (sender == null ? "Room" : sender.getClientName());
 		Iterator<ServerThread> iter = clients.iterator();
 		while (iter.hasNext()) {

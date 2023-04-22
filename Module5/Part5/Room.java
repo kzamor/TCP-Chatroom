@@ -119,11 +119,15 @@ public class Room implements AutoCloseable {
 					// kpz2 4/5/2023
 					case ROLL:
 						String text = comm2[1];
-						if (text.contains("d")) {
-							int numOfDice = text.charAt(0);
-							int max = text.charAt(2);
-							int randomNum = (int) (Math.random() * (1 - max)) + 1;
-							message = "The result of the roll is: " + numOfDice + "d" + randomNum;
+						if (text.contains("d")) {				
+                            String[] arrOfStr = text.split("d", 2);
+							String numOfDice = arrOfStr[0];
+							String max = arrOfStr[1];
+							int maxNum = Integer.parseInt(max);
+							int numDice = Integer.parseInt(numOfDice);
+							double result = ((Math.random() * ((numDice*maxNum)-numDice)) + numDice);
+							int result1 = (int)result;
+							message = "The result of the roll is: " + result1;
 							sendMessage(client, message);
 						} else {
 							int num = Integer.parseInt(text);
@@ -207,8 +211,8 @@ public class Room implements AutoCloseable {
 			// it was a command, don't broadcast
 			return;
 		}
-		//kpz2 4/7/2023
-		if (message.contains("*b")) {
+		 //kpz2 4/7/2023
+		 if (message.contains("*b")) {
 			message = message.replace("*b", "<b>");
 			message = message.replace("b*", "</b>");
 		}
@@ -221,15 +225,15 @@ public class Room implements AutoCloseable {
 			message = message.replace("u*", "</u>");
 		}
 		if (message.contains("#r")) {
-			message = message.replace("#r", "<font>");
+			message = message.replace("#r", "<font color = 'red'>");
 			message = message.replace("r#", "</font>");
 		}
 		if (message.contains("#b")) {
-			message = message.replace("#b", "<font>");
+			message = message.replace("#b", "<font color = 'blue'>");
 			message = message.replace("b#", "</font>");
 		}
 		if (message.contains("#g")) {
-			message = message.replace("#g", "<font>");
+			message = message.replace("#g", "<font color = 'green'>");
 			message = message.replace("g#", "</font>");
 		}
 
