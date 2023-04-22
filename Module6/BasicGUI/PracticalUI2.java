@@ -242,7 +242,7 @@ public class PracticalUI2 extends JFrame {
 
     private void addText(String text, JPanel content) {
         // add message
-        JEditorPane textContainer = new JEditorPane("text/plain", text);
+        JEditorPane textContainer = new JEditorPane("text/html", text);
         // sizes the panel to attempt to take up the width of the container
         // and expand in height based on word wrapping
         textContainer.setLayout(null);
