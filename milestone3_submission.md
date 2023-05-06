@@ -1,10 +1,6 @@
 <table><tr><td> <em>Assignment: </em> IT114 Chatroom Milestone3</td></tr>
 <tr><td> <em>Student: </em> Kelvin Zamor (kpz2)</td></tr>
-<<<<<<< HEAD
-<tr><td> <em>Generated: </em> 4/22/2023 12:56:05 PM</td></tr>
-=======
-<tr><td> <em>Generated: </em> 5/6/2023 1:33:02 AM</td></tr>
->>>>>>> 0e1f1ef82732c2c388342f7a354007ff020e02bd
+<tr><td> <em>Generated: </em> 5/6/2023 6:59:56 AM</td></tr>
 <tr><td> <em>Grading Link: </em> <a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IT114-008-S23/it114-chatroom-milestone3/grade/kpz2" target="_blank">Grading</a></td></tr></table>
 <table><tr><td> <em>Instructions: </em> <p>Implement the features from Milestone3 from the proposal document:&nbsp;&nbsp;<a href="https://docs.google.com/document/d/1ONmvEvel97GTFPGfVwwQC96xSsobbSbk56145XizQG4/view">https://docs.google.com/document/d/1ONmvEvel97GTFPGfVwwQC96xSsobbSbk56145XizQG4/view</a></p>
 </td></tr></table>
@@ -73,19 +69,6 @@
 <tr><td> <em>Sub-Task 3: </em> Briefly explain the code logic of how this was achieved</td></tr>
 <tr><td> <em>Response:</em> <p>It checks if a message is a private message by splitting the message<br>string into two parts at the first space. If the first part starts<br>with &quot;@&quot;, the message is private, so it takes the receiver&#39;s username and<br>the message text from the two parts. Then, it searches for a client<br>with the same username as the receiver out of all the clients. If<br>it finds the receiver, it sends a private message to both the sender<br>and the receiver. The message starts with &quot;To&quot; for the receiver and &quot;From&quot;<br>for the sender.<br></p><br></td></tr>
 </table></td></tr>
-<<<<<<< HEAD
-<table><tr><td> <em>Deliverable 6: </em> Mute/Unmute </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707795-a9c94a71-7871-4572-bfae-ad636f8f8474.png"></td></tr>
-<tr><td><table><tr><td> <em>Sub-Task 1: </em> Add screenshots demoing this feature</td></tr>
-<tr><td><table><tr><td>Missing Image</td></tr>
-<tr><td> <em>Caption:</em> (missing)</td></tr>
-</table></td></tr>
-<tr><td> <em>Sub-Task 2: </em> Add screenshots of the code snippets that achieve this feature</td></tr>
-<tr><td><table><tr><td>Missing Image</td></tr>
-<tr><td> <em>Caption:</em> (missing)</td></tr>
-</table></td></tr>
-<tr><td> <em>Sub-Task 3: </em> Briefly explain the code logic of how this was achieved</td></tr>
-<tr><td> <em>Response:</em> <p>(missing)</p><br></td></tr>
-=======
 <table><tr><td> <em>Deliverable 6: </em> Mute/Unmute </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Add screenshots demoing this feature</td></tr>
 <tr><td><table><tr><td><img width="768px" src="https://user-images.githubusercontent.com/127684882/236601985-c4be7461-76ff-4910-b79b-a85aa675b312.png"/></td></tr>
@@ -99,10 +82,9 @@
 </table></td></tr>
 <tr><td> <em>Sub-Task 3: </em> Briefly explain the code logic of how this was achieved</td></tr>
 <tr><td> <em>Response:</em> <p>The code allows users to mute and unmute other users. For the MUTE<br>command, the code adds the muted user to a list and sends a<br>message saying that they have been muted. If the user is not found,<br>a message saying this is sent to the client. For the UNMUTE command,<br>the code removes the user from the muted list and sends a message<br>saying that they have been unmuted. If the user is not found, nothing<br>happens.<br></p><br></td></tr>
->>>>>>> 0e1f1ef82732c2c388342f7a354007ff020e02bd
 </table></td></tr>
 <table><tr><td> <em>Deliverable 7: </em> Misc </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Pull request from milestone3 to main</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/kzamor/IT114-008/pull/11">https://github.com/kzamor/IT114-008/pull/11</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/kzamor/IT114-008/pull/13">https://github.com/kzamor/IT114-008/pull/13</a> </td></tr>
 </table></td></tr>
 <table><tr><td><em>Grading Link: </em><a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IT114-008-S23/it114-chatroom-milestone3/grade/kpz2" target="_blank">Grading</a></td></tr></table>

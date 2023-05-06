@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.Random;
 
-
 import Project.common.Constants;
 
 public class Room implements AutoCloseable {
@@ -24,9 +23,11 @@ public class Room implements AutoCloseable {
     private final static String LOGOUT = "logout";
     private final static String LOGOFF = "logoff";
     private static final String ROLL = "roll";
-	private static final String FLIP = "flip";
+    private static final String FLIP = "flip";
+    private final static String MUTE = "mute";
+    private final static String UNMUTE = "unmute";
     private static Logger logger = Logger.getLogger(Room.class.getName());
-    
+    private List<ServerThread> mutedClients = new ArrayList<>();
 
     public Room(String name) {
         this.name = name;
@@ -34,8 +35,8 @@ public class Room implements AutoCloseable {
     }
 
     private void info(String message) {
-		System.out.println(String.format("Room[%s]: %s", name, message));
-	}
+        System.out.println(String.format("Room[%s]: %s", name, message));
+    }
 
     public String getName() {
         return name;
@@ -106,6 +107,15 @@ public class Room implements AutoCloseable {
         }
     }
 
+    private ServerThread getClientByName(String username) {
+        for (ServerThread client : clients) {
+            if (client.getClientName().equals(username)) {
+                return client;
+            }
+        }
+        return null;
+    }
+
     /***
      * Helper function to process messages to trigger different functionality.
      * 
@@ -134,50 +144,66 @@ public class Room implements AutoCloseable {
                         roomName = comm2[1];
                         Room.joinRoom(roomName, client);
                         break;
-                        //4/21/23 kpz2
-                        case ROLL:
-						String text = comm2[1];
-                       
-						if (text.contains("d")) {				
+                    case ROLL:
+                        String text = comm2[1];
+                        if (text.contains("d")) {
                             String[] arrOfStr = text.split("d", 2);
-							String numOfDice = arrOfStr[0];
-							String max = arrOfStr[1];
-							int maxNum = Integer.parseInt(max);
-							int numDice = Integer.parseInt(numOfDice);
-							double result = ((Math.random() * ((numDice*maxNum)-numDice)) + numDice);
-							int result1 = (int)result;
-							message = "triggered roll: *b The result of the roll is: " + result1 + "b*" ;
-                            //*b displays roll command in bold format
-							sendMessage(client, message);
-						} else {
-							int num = Integer.parseInt(text);
-							int randomNum = (int) (Math.random() * (num - 1)) + 1;
-							message = "triggered roll: *b The result of the roll is: " + randomNum + "b*";
-                            //*b displays roll command in bold format
-							sendMessage(client, message);
-						}
-						break;
-					case FLIP:
-                        
-						Random random = new Random();
-						int result = random.nextInt(2);
-                        
-						if (result == 0) {
-							message = "triggered flip: *bThe result of the coin flip is heads.b*";
-                            //*b displays flip command in bold format
-						} else {
-							message = "triggered flip: *bThe result of the coin flip is tails.b*";
-						}
-
-						sendMessage(client, message);
-						wasCommand = true;
-						break;
-                    
+                            String numOfDice = arrOfStr[0];
+                            String max = arrOfStr[1];
+                            int maxNum = Integer.parseInt(max);
+                            int numDice = Integer.parseInt(numOfDice);
+                            double result = ((Math.random() * ((numDice * maxNum) - numDice)) + numDice);
+                            int result1 = (int) result;
+                            message = "triggered roll: *b The result of the roll is: " + result1 + "b*";
+                            // *b displays roll command in bold format
+                            sendMessage(client, message);
+                        } else {
+                            int num = Integer.parseInt(text);
+                            int randomNum = (int) (Math.random() * (num - 1)) + 1;
+                            message = "triggered roll: *b The result of the roll is: " + randomNum + "b*";
+                            // *b displays roll command in bold format
+                            sendMessage(client, message);
+                        }
+                        break;
+                    case FLIP:
+                        Random random = new Random();
+                        int result = random.nextInt(2);
+                        if (result == 0) {
+                            message = "triggered flip: *bThe result of the coin flip is heads.b*";
+                            // *b displays flip command in bold format
+                        } else {
+                            message = "triggered flip: *bThe result of the coin flip is tails.b*";
+                        }
+                        sendMessage(client, message);
+                        info("Flip command triggered");
+                        wasCommand = true;
+                        break;
                     case DISCONNECT:
                     case LOGOUT:
                     case LOGOFF:
                         Room.disconnectClient(client, this);
                         break;
+                    // kpz2 5/5/23
+                    case MUTE:
+                        String username = comm2[1];
+                        ServerThread mutedClient = getClientByName(username);
+                        if (mutedClient != null) {
+                            mutedClients.add(mutedClient);
+                            sendMessage(client,
+                                    "You have muted user " + username + " (muted by " + client.getClientName() + ")");
+                            sendMessage(mutedClient, "You have been muted by " + client.getClientName());
+                        } else {
+                            sendMessage(client, "User " + username + " not found");
+                        }
+                        break;
+                    case UNMUTE:
+                        String unmuteUsername = comm2[1];
+                        ServerThread unmutedClient = getClientByName(unmuteUsername);
+                        if (unmutedClient != null) {
+                            mutedClients.remove(unmutedClient);
+                            sendMessage(client, "Unmuted user " + unmuteUsername);
+                            break;
+                        }
                     default:
                         wasCommand = false;
                         break;
@@ -230,40 +256,41 @@ public class Room implements AutoCloseable {
      * 
      * @param sender  The client sending the message
      * @param message The message to broadcast inside the room
+     * 
      */
+
     protected synchronized void sendMessage(ServerThread sender, String message) {
         if (!isRunning) {
             return;
         }
         info("Sending message to " + clients.size() + " clients");
-		if (sender != null && processCommands(message, sender)) {
-			// it was a command, don't broadcast
-			return;
-		}
-        //kpz2 4/21/23
-        // Check if it is a private message
-        String[] privateMessage = message.split("\\s", 2);
-        if (privateMessage.length > 1 && privateMessage[0].startsWith("@")) {
-            String username = privateMessage[0].substring(1);
-            message = privateMessage[1];
-    
-            // Find the reciever
-            for (ServerThread client : clients) {
-                if (client.getClientName().equals(username)) {
-                    // Send the private message to the sender and reciever
-                    sender.sendMessage(sender.getClientId(), "To " + username + ": " + message);
-                    client.sendMessage(sender.getClientId(), "From " + sender.getClientName() + ": " + message);
-                    return;
-                }
-            }
-    
+        if (sender != null && processCommands(message, sender)) {
+            // it was a command, don't broadcast
             return;
         }
-    
+
+        // Process commands
         if (sender != null && processCommands(message, sender)) {
             return;
         }
-    
+
+        // Check if it is a private message
+        if (message.startsWith("@")) {
+            String[] privateMessage = message.split("\\s", 2);
+            if (privateMessage.length > 1) {
+                String username = privateMessage[0].substring(1);
+                String privateMsg = privateMessage[1];
+                // Find the receiver
+                for (ServerThread client : clients) {
+                    if (client.getClientName().equals(username)) {
+                        // Send the private message to the sender and recipient
+                        sender.sendMessage(sender.getClientId(), "To " + username + ": " + privateMsg);
+                        client.sendMessage(sender.getClientId(), "From " + sender.getClientName() + ": " + privateMsg);
+                        return;
+                    }
+                }
+            }
+        }
         // Filter and broadcast the message to all clients
         if (message.contains("*b")) {
             message = message.replace("*b", "<b>");
@@ -289,16 +316,32 @@ public class Room implements AutoCloseable {
             message = message.replace("#g", "<font color = 'green'>");
             message = message.replace("g#", "</font>");
         }
-    
+
         long from = sender == null ? Constants.DEFAULT_CLIENT_ID : sender.getClientId();
         Iterator<ServerThread> iter = clients.iterator();
         while (iter.hasNext()) {
             ServerThread client = iter.next();
-            boolean messageSent = client.sendMessage(from, message);
-            if (!messageSent) {
-                handleDisconnect(iter, client);
+            boolean isMuted = mutedClients.contains(client);
+            boolean isSender = client == sender;
+            boolean isMutedSender = isMuted && isSender;
+            boolean isNotMutedSender = !isMuted && isSender;
+            boolean isNotMuted = !isMuted;
+            boolean isNotMutedNotSender = isNotMuted && !isSender;
+            boolean isNotMutedNotMuter = isNotMuted && !mutedClients.contains(sender);
+            if (isNotMutedSender || isNotMutedNotSender || isMutedSender) {
+                boolean messageSent = client.sendMessage(from, message);
+                if (!messageSent) {
+                    handleDisconnect(iter, client);
+                }
+            } else if (isMuted && isNotMutedNotMuter) {
+                boolean messageSent = client.sendMessage(from, message);
+                if (!messageSent) {
+                    handleDisconnect(iter, client);
+                }
             }
+
         }
+
     }
 
     protected synchronized void sendConnectionStatus(ServerThread sender, boolean isConnected) {
