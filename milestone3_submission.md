@@ -1,8 +1,11 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 85c2314341523137715ca697955455f8e464f2f1
 <table><tr><td> <em>Assignment: </em> IT114 Chatroom Milestone3</td></tr>
 <tr><td> <em>Student: </em> Kelvin Zamor (kpz2)</td></tr>
-<tr><td> <em>Generated: </em> 5/6/2023 6:59:56 AM</td></tr>
+<tr><td> <em>Generated: </em> 5/6/2023 11:32:13 AM</td></tr>
 <tr><td> <em>Grading Link: </em> <a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IT114-008-S23/it114-chatroom-milestone3/grade/kpz2" target="_blank">Grading</a></td></tr></table>
 <table><tr><td> <em>Instructions: </em> <p>Implement the features from Milestone3 from the proposal document:&nbsp;&nbsp;<a href="https://docs.google.com/document/d/1ONmvEvel97GTFPGfVwwQC96xSsobbSbk56145XizQG4/view">https://docs.google.com/document/d/1ONmvEvel97GTFPGfVwwQC96xSsobbSbk56145XizQG4/view</a></p>
 </td></tr></table>
@@ -89,5 +92,9 @@
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Pull request from milestone3 to main</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/kzamor/IT114-008/pull/13">https://github.com/kzamor/IT114-008/pull/13</a> </td></tr>
 </table></td></tr>
+<<<<<<< HEAD
 <table><tr><td><em>Grading Link: </em><a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IT114-008-S23/it114-chatroom-milestone3/grade/kpz2" target="_blank">Grading</a></td></tr></table>
 >>>>>>> c58e61317e8422b2dd0bd430b22cf4c436328ac9
+=======
+<table><tr><td><em>Grading Link: </em><a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IT114-008-S23/it114-chatroom-milestone3/grade/kpz2" target="_blank">Grading</a></td></tr></table>
+>>>>>>> 85c2314341523137715ca697955455f8e464f2f1
