@@ -321,28 +321,17 @@ public class Room implements AutoCloseable {
         Iterator<ServerThread> iter = clients.iterator();
         while (iter.hasNext()) {
             ServerThread client = iter.next();
-            boolean isMuted = mutedClients.contains(client);
-            boolean isSender = client == sender;
-            boolean isMutedSender = isMuted && isSender;
-            boolean isNotMutedSender = !isMuted && isSender;
-            boolean isNotMuted = !isMuted;
-            boolean isNotMutedNotSender = isNotMuted && !isSender;
-            boolean isNotMutedNotMuter = isNotMuted && !mutedClients.contains(sender);
-            if (isNotMutedSender || isNotMutedNotSender || isMutedSender) {
-                boolean messageSent = client.sendMessage(from, message);
-                if (!messageSent) {
-                    handleDisconnect(iter, client);
-                }
-            } else if (isMuted && isNotMutedNotMuter) {
-                boolean messageSent = client.sendMessage(from, message);
-                if (!messageSent) {
-                    handleDisconnect(iter, client);
-                }
+            if (client != sender && mutedClients.contains(client)) { // check if client is muted, but not the sender
+                continue;
             }
-
+            boolean messageSent = client.sendMessage(from, message);
+            if (!messageSent) {
+                handleDisconnect(iter, client);
+            }
         }
-
     }
+
+    
 
     protected synchronized void sendConnectionStatus(ServerThread sender, boolean isConnected) {
         Iterator<ServerThread> iter = clients.iterator();
